@@ -1,0 +1,10 @@
+{
+  "hosting": {
+    "public": "akhil-fortfolio",
+    "ignore": [
+      "firebase.json",
+      "**/.*",
+      "**/node_modules/**"
+    ]
+  }
+}

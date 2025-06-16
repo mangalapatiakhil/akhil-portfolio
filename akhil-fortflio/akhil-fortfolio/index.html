@@ -1,0 +1,582 @@
+ <!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Mangalapati Akhil - Portfolio</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Georgia', serif;
+            background: linear-gradient(135deg, #1a0033, #330066, #660033);
+            color: #fff;
+            overflow-x: hidden;
+        }
+
+        .theater-container {
+            min-height: 100vh;
+            position: relative;
+            background: 
+                radial-gradient(ellipse at center top, rgba(255, 215, 0, 0.1) 0%, transparent 50%),
+                linear-gradient(180deg, #0f0f23 0%, #1a0033 50%, #2d1b4e 100%);
+        }
+
+        /* Animated curtains */
+        .curtains {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100vh;
+            z-index: 1000;
+            pointer-events: none;
+        }
+
+        .curtain-left, .curtain-right {
+            position: absolute;
+            top: 0;
+            width: 50%;
+            height: 100%;
+            background: linear-gradient(90deg, #8B0000, #A0522D, #8B0000);
+            background-size: 20px 100%;
+            animation: curtainOpen 3s ease-in-out 1s forwards;
+            box-shadow: inset 0 0 50px rgba(0,0,0,0.5);
+        }
+
+        .curtain-left {
+            left: 0;
+            transform-origin: left;
+        }
+
+        .curtain-right {
+            right: 0;
+            transform-origin: right;
+        }
+
+        @keyframes curtainOpen {
+            0% { transform: scaleX(1); }
+            100% { transform: scaleX(0); }
+        }
+
+        /* Stage lights */
+        .stage-lights {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100px;
+            background: linear-gradient(180deg, rgba(255, 215, 0, 0.3) 0%, transparent 100%);
+            z-index: 10;
+            animation: lightsFlicker 4s ease-in-out infinite;
+        }
+
+        @keyframes lightsFlicker {
+            0%, 100% { opacity: 0.8; }
+            25% { opacity: 1; }
+            50% { opacity: 0.9; }
+            75% { opacity: 1; }
+        }
+
+        .spotlight {
+            position: absolute;
+            width: 200px;
+            height: 200px;
+            border-radius: 50%;
+            background: radial-gradient(circle, rgba(255, 215, 0, 0.3) 0%, transparent 70%);
+            animation: spotlightMove 8s ease-in-out infinite;
+        }
+
+        .spotlight:nth-child(1) {
+            top: 20%;
+            left: 10%;
+            animation-delay: 0s;
+        }
+
+        .spotlight:nth-child(2) {
+            top: 30%;
+            right: 10%;
+            animation-delay: 2s;
+        }
+
+        @keyframes spotlightMove {
+            0%, 100% { transform: translate(0, 0) scale(1); opacity: 0.6; }
+            50% { transform: translate(50px, 30px) scale(1.2); opacity: 0.8; }
+        }
+
+        /* Header with theater marquee */
+        .header {
+            text-align: center;
+            padding: 80px 20px 40px;
+            position: relative;
+            z-index: 100;
+        }
+
+        .marquee {
+            background: linear-gradient(45deg, #FFD700, #FFA500, #FFD700);
+            border: 8px solid #8B4513;
+            border-radius: 20px;
+            padding: 20px;
+            margin: 20px auto;
+            max-width: 800px;
+            box-shadow: 
+                0 0 30px rgba(255, 215, 0, 0.5),
+                inset 0 0 20px rgba(255, 255, 255, 0.2);
+            animation: marqueeGlow 2s ease-in-out infinite alternate;
+        }
+
+        @keyframes marqueeGlow {
+            0% { box-shadow: 0 0 30px rgba(255, 215, 0, 0.5), inset 0 0 20px rgba(255, 255, 255, 0.2); }
+            100% { box-shadow: 0 0 50px rgba(255, 215, 0, 0.8), inset 0 0 30px rgba(255, 255, 255, 0.4); }
+        }
+
+        .name {
+            font-size: 3.5rem;
+            font-weight: bold;
+            color: #8B0000;
+            text-shadow: 3px 3px 6px rgba(0,0,0,0.7);
+            margin-bottom: 10px;
+            animation: nameFlash 3s ease-in-out infinite;
+        }
+
+        @keyframes nameFlash {
+            0%, 90%, 100% { opacity: 1; }
+            95% { opacity: 0.8; }
+        }
+
+        .tagline {
+            font-size: 1.2rem;
+            color: #4A4A4A;
+            font-style: italic;
+        }
+
+        /* Main content area */
+        .main-content {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 40px 20px;
+            position: relative;
+            z-index: 100;
+        }
+
+        /* Section styling */
+        .section {
+            background: rgba(0, 0, 0, 0.6);
+            border: 2px solid #FFD700;
+            border-radius: 15px;
+            margin: 30px 0;
+            padding: 30px;
+            backdrop-filter: blur(10px);
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.5);
+            transition: all 0.3s ease;
+            animation: sectionSlideIn 1s ease-out forwards;
+            opacity: 0;
+            transform: translateY(50px);
+        }
+
+        .section:nth-child(1) { animation-delay: 0.5s; }
+        .section:nth-child(2) { animation-delay: 0.8s; }
+        .section:nth-child(3) { animation-delay: 1.1s; }
+        .section:nth-child(4) { animation-delay: 1.4s; }
+        .section:nth-child(5) { animation-delay: 1.7s; }
+
+        @keyframes sectionSlideIn {
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        .section:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 15px 40px rgba(255, 215, 0, 0.3);
+            border-color: #FFA500;
+        }
+
+        .section-title {
+            font-size: 2rem;
+            color: #FFD700;
+            margin-bottom: 20px;
+            text-align: center;
+            text-shadow: 2px 2px 4px rgba(0,0,0,0.8);
+            position: relative;
+        }
+
+        .section-title::after {
+            content: '';
+            display: block;
+            width: 100px;
+            height: 3px;
+            background: linear-gradient(90deg, transparent, #FFD700, transparent);
+            margin: 10px auto;
+            border-radius: 2px;
+        }
+
+        /* Contact info styling */
+        .contact-info {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: 20px;
+            margin-bottom: 30px;
+        }
+
+        .contact-item {
+            background: rgba(255, 215, 0, 0.1);
+            border: 1px solid #FFD700;
+            border-radius: 10px;
+            padding: 15px;
+            text-align: center;
+            transition: all 0.3s ease;
+        }
+
+        .contact-item:hover {
+            background: rgba(255, 215, 0, 0.2);
+            transform: scale(1.05);
+        }
+
+        .contact-item strong {
+            color: #FFD700;
+            display: block;
+            margin-bottom: 5px;
+        }
+
+        /* Skills and projects grid */
+        .grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 20px;
+        }
+
+        .card {
+            background: rgba(139, 0, 0, 0.2);
+            border: 1px solid #FFD700;
+            border-radius: 10px;
+            padding: 20px;
+            transition: all 0.3s ease;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .card::before {
+            content: '';
+            position: absolute;
+            top: -50%;
+            left: -50%;
+            width: 200%;
+            height: 200%;
+            background: linear-gradient(45deg, transparent, rgba(255, 215, 0, 0.1), transparent);
+            transform: rotate(45deg);
+            transition: all 0.5s ease;
+            opacity: 0;
+        }
+
+        .card:hover::before {
+            opacity: 1;
+            animation: shimmer 1s ease-in-out;
+        }
+
+        @keyframes shimmer {
+            0% { transform: translateX(-100%) translateY(-100%) rotate(45deg); }
+            100% { transform: translateX(100%) translateY(100%) rotate(45deg); }
+        }
+
+        .card:hover {
+            transform: translateY(-5px) rotateX(5deg);
+            box-shadow: 0 15px 30px rgba(255, 215, 0, 0.3);
+        }
+
+        .card h3 {
+            color: #FFD700;
+            margin-bottom: 15px;
+            font-size: 1.3rem;
+        }
+
+        /* Floating theater elements */
+        .floating-elements {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            pointer-events: none;
+            z-index: 1;
+        }
+
+        .floating-mask {
+            position: absolute;
+            font-size: 40px;
+            opacity: 0.1;
+            animation: float 10s ease-in-out infinite;
+        }
+
+        .floating-mask:nth-child(1) {
+            top: 20%;
+            left: 5%;
+            animation-delay: 0s;
+        }
+
+        .floating-mask:nth-child(2) {
+            top: 60%;
+            right: 5%;
+            animation-delay: 3s;
+        }
+
+        .floating-mask:nth-child(3) {
+            top: 80%;
+            left: 50%;
+            animation-delay: 6s;
+        }
+
+        @keyframes float {
+            0%, 100% { transform: translateY(0px) rotate(0deg); }
+            33% { transform: translateY(-20px) rotate(5deg); }
+            66% { transform: translateY(10px) rotate(-3deg); }
+        }
+
+        /* Responsive design */
+        @media (max-width: 768px) {
+            .name {
+                font-size: 2.5rem;
+            }
+            
+            .main-content {
+                padding: 20px 10px;
+            }
+            
+            .section {
+                padding: 20px;
+            }
+            
+            .contact-info {
+                grid-template-columns: 1fr;
+            }
+        }
+
+        /* Footer */
+        .footer {
+            text-align: center;
+            padding: 40px 20px;
+            background: rgba(0, 0, 0, 0.8);
+            border-top: 2px solid #FFD700;
+            margin-top: 50px;
+        }
+
+        .footer p {
+            color: #FFD700;
+            font-style: italic;
+        }
+    </style>
+</head>
+<body>
+    <div class="theater-container">
+        <!-- Animated curtains -->
+        <div class="curtains">
+            <div class="curtain-left"></div>
+            <div class="curtain-right"></div>
+        </div>
+
+        <!-- Stage lights -->
+        <div class="stage-lights"></div>
+        <div class="spotlight"></div>
+        <div class="spotlight"></div>
+
+        <!-- Floating theater elements -->
+        <div class="floating-elements">
+            <div class="floating-mask">🎭</div>
+            <div class="floating-mask">🎬</div>
+            <div class="floating-mask">🎪</div>
+        </div>
+
+        <!-- Header with marquee -->
+        <div class="header">
+            <div class="marquee">
+                <h1 class="name">MANGALAPATI AKHIL</h1>
+                <p class="tagline">Full-Stack Developer & Mathematics Scholar</p>
+            </div>
+        </div>
+
+        <!-- Main content -->
+        <div class="main-content">
+            <!-- Contact Information -->
+            <div class="section">
+                <h2 class="section-title">Contact Information</h2>
+                <div class="contact-info">
+                    <div class="contact-item">
+                        <strong>Location</strong>
+                        Dowleshwaram, Rajahmundry, Andhra Pradesh
+                    </div>
+                    <div class="contact-item">
+                        <strong>Mobile</strong>
+                        +91 7680906589
+                    </div>
+                    <div class="contact-item">
+                        <strong>Email</strong>
+                        mangalapatiakhil17@gmail.com
+                    </div>
+                    <div class="contact-item">
+                        <strong>GitHub</strong>
+                        mangalapatiakhil
+                    </div>
+                    <div class="contact-item">
+                        <strong>Portfolio</strong>
+                        mangalapatiakhil.github.io
+                    </div>
+                </div>
+                
+                <div style="text-align: center; margin-top: 20px; padding: 20px; background: rgba(255, 215, 0, 0.1); border-radius: 10px;">
+                    <h3 style="color: #FFD700; margin-bottom: 15px;">Career Objective</h3>
+                    <p style="font-style: italic; line-height: 1.6;">
+                        Motivated and self-driven undergraduate student pursuing B.Sc. Mathematics (Honors), seeking to gain knowledge and practical experience in the field of software development. Interested in problem solving, full-stack development, and real-world applications.
+                    </p>
+                </div>
+            </div>
+
+            <!-- Education -->
+            <div class="section">
+                <h2 class="section-title">Education</h2>
+                <div class="grid">
+                    <div class="card">
+                        <h3>B.Sc. Mathematics (Honors)</h3>
+                        <p><strong>Government College (Autonomous), Rajamahendravaram</strong></p>
+                        <p>Currently Pursuing – 3rd Year</p>
+                    </div>
+                    <div class="card">
+                        <h3>Intermediate (MPC)</h3>
+                        <p><strong>Government Junior College, Rajamahendravaram</strong></p>
+                        <p>2021 – 2023</p>
+                        <p>Subjects: Mathematics, Physics, Chemistry</p>
+                    </div>
+                    <div class="card">
+                        <h3>SSC (Secondary School Certificate)</h3>
+                        <p><strong>King George School, Dowleshwaram</strong></p>
+                        <p>2020 – 2021</p>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Technical Skills -->
+            <div class="section">
+                <h2 class="section-title">Technical Skills</h2>
+                <div class="grid">
+                    <div class="card">
+                        <h3>Version Control</h3>
+                        <p>Git, GitHub</p>
+                    </div>
+                    <div class="card">
+                        <h3>Operating Systems</h3>
+                        <p>Basic Linux</p>
+                    </div>
+                    <div class="card">
+                        <h3>Web Development</h3>
+                        <p>Full-Stack Development</p>
+                        <p>HTML, CSS, JavaScript, Node.js, MongoDB</p>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Internships & Projects -->
+            <div class="section">
+                <h2 class="section-title">Experience & Projects</h2>
+                <div class="grid">
+                    <div class="card">
+                        <h3>CID Agrigold Internship</h3>
+                        <p>Worked on software and tech exposure in agricultural use-cases.</p>
+                    </div>
+                    <div class="card">
+                        <h3>IT Global Internship</h3>
+                        <p><strong>Full Stack Development</strong></p>
+                        <p>Gained hands-on experience with end-to-end web development and deployment.</p>
+                    </div>
+                    <div class="card">
+                        <h3>Right Now Universe Movies Website</h3>
+                        <p>Developed a full-stack movie website using modern technologies. The frontend included user features and responsive design.</p>
+                    </div>
+                    <div class="card">
+                        <h3>Portfolio Website</h3>
+                        <p>Created a personal portfolio using HTML, CSS, and JavaScript to showcase projects and skills.</p>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Strengths & Hobbies -->
+            <div class="section">
+                <h2 class="section-title">Strengths & Interests</h2>
+                <div class="grid">
+                    <div class="card">
+                        <h3>Professional Strengths</h3>
+                        <ul style="list-style: none; padding-left: 0;">
+                            <li>• Self-motivated and eager to learn new technologies</li>
+                            <li>• Passion for practical implementation and real-world projects</li>
+                            <li>• Strong analytical, communication, and problem-solving skills</li>
+                        </ul>
+                    </div>
+                    <div class="card">
+                        <h3>Hobbies & Interests</h3>
+                        <ul style="list-style: none; padding-left: 0;">
+                            <li>• Reading books</li>
+                            <li>• Browsing the internet</li>
+                            <li>• Creating mini hand crafts</li>
+                            <li>• Designing science fair projects for school kids</li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Footer -->
+        <div class="footer">
+            <p>🎭 "All the world's a stage, and all the men and women merely players" 🎬</p>
+            <p>Thank you for visiting my theater of achievements!</p>
+        </div>
+    </div>
+
+    <script>
+        // Add some interactive theater effects
+        document.addEventListener('DOMContentLoaded', function() {
+            // Add click sound effect simulation
+            const sections = document.querySelectorAll('.section');
+            sections.forEach(section => {
+                section.addEventListener('mouseenter', function() {
+                    this.style.transform = 'translateY(-5px) scale(1.02)';
+                });
+                
+                section.addEventListener('mouseleave', function() {
+                    this.style.transform = 'translateY(0) scale(1)';
+                });
+            });
+
+            // Add typing effect to name
+            const nameElement = document.querySelector('.name');
+            const originalText = nameElement.textContent;
+            nameElement.textContent = '';
+            
+            setTimeout(() => {
+                let i = 0;
+                const typeInterval = setInterval(() => {
+                    if (i < originalText.length) {
+                        nameElement.textContent += originalText.charAt(i);
+                        i++;
+                    } else {
+                        clearInterval(typeInterval);
+                    }
+                }, 100);
+            }, 4000); // Start after curtains open
+
+            // Add random spotlight movement
+            const spotlights = document.querySelectorAll('.spotlight');
+            setInterval(() => {
+                spotlights.forEach(spotlight => {
+                    const randomX = Math.random() * window.innerWidth;
+                    const randomY = Math.random() * window.innerHeight;
+                    spotlight.style.left = randomX + 'px';
+                    spotlight.style.top = randomY + 'px';
+                });
+            }, 8000);
+        });
+    </script>
+</body>
+</html>
